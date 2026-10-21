@@ -1,0 +1,117 @@
+--====================================================================--
+-- Project: Jazzhub (Redz Hub UI Style)
+-- Description: Modern Roblox Lua script styled after Redz Hub UI.
+-- License: MIT
+--====================================================================--
+
+-- Load Redz UI Library (Standard Redz UI Loader or custom recreation)
+local RedzLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/Library/main/RedzLib"))()
+
+-- Create Window
+local Window = RedzLib:MakeWindow({
+    Title = "Jazzhub | Blox Fruits",
+    SubTitle = "v1.0.0",
+    SaveFolder = "JazzhubConfigs"
+})
+
+-- Add Notification
+RedzLib:MakeNotification({
+    Title = "Jazzhub Loaded!",
+    Text = "Welcome to Jazzhub Blox Fruits Edition.",
+    Time = 5
+})
+
+--====================================================================--
+-- TABS
+--====================================================================--
+local MainTab = Window:MakeTab({"Main Farm", "Home"})
+local StatsTab = Window:MakeTab({"Stats", "BarChart"})
+local MiscTab = Window:MakeTab({"Teleports & Misc", "Globe"})
+
+--====================================================================--
+-- TAB 1: MAIN FARM
+--====================================================================--
+MainTab:AddSection({"Farming Features"})
+
+local AutoFarmToggle = MainTab:AddToggle({
+    Name = "Auto Farm Level",
+    Default = false,
+    Callback = function(state)
+        print("[Jazzhub] Auto Farm: " .. tostring(state))
+    end
+})
+
+MainTab:AddToggle({
+    Name = "Fast Attack",
+    Default = false,
+    Callback = function(state)
+        print("[Jazzhub] Fast Attack: " .. tostring(state))
+    end
+})
+
+MainTab:AddDropdown({
+    Name = "Select Weapon",
+    Options = {"Melee", "Blox Fruit", "Sword", "Gun"},
+    Default = "Melee",
+    Callback = function(selected)
+        print("[Jazzhub] Selected Weapon: " .. selected)
+    end
+})
+
+--====================================================================--
+-- TAB 2: STATS
+--====================================================================--
+StatsTab:AddSection({"Stat Management"})
+
+StatsTab:AddDropdown({
+    Name = "Target Stat",
+    Options = {"Melee", "Defense", "Sword", "Gun", "Demon Fruit"},
+    Default = "Melee",
+    Callback = function(selected)
+        print("[Jazzhub] Target Stat: " .. selected)
+    end
+})
+
+StatsTab:AddToggle({
+    Name = "Auto Invest Points",
+    Default = false,
+    Callback = function(state)
+        print("[Jazzhub] Auto Stats: " .. tostring(state))
+    end
+})
+
+--====================================================================--
+-- TAB 3: MISC & TELEPORTS
+--====================================================================--
+MiscTab:AddSection({"Server Utilities"})
+
+MiscTab:AddButton({
+    Name = "Server Hop",
+    Callback = function()
+        pcall(function()
+            local TeleportService = game:GetService("TeleportService")
+            local Players = game:GetService("Players")
+            TeleportService:Teleport(game.PlaceId, Players.LocalPlayer)
+        end)
+    end
+})
+
+MiscTab:AddButton({
+    Name = "Rejoin Server",
+    Callback = function()
+        pcall(function()
+            local TeleportService = game:GetService("TeleportService")
+            local Players = game:GetService("Players")
+            TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, Players.LocalPlayer)
+        end)
+    end
+})
+
+--====================================================================--
+-- BACKGROUND EXECUTION LOOPS
+--====================================================================--
+task.spawn(function()
+    while task.wait(0.1) do
+        -- Add background farm routine here
+    end
+end)
